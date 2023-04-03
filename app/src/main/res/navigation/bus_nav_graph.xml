@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    android:label=" "
+    app:startDestination="@id/nav_bus">
+
+    <fragment
+        android:id="@+id/nav_bus"
+        android:name="com.example.ppbus.ui.bus.BusManagementFragment"
+        android:label="公車管理"
+        tools:layout="@layout/fragment_bus_management" />
+    <fragment
+        android:id="@+id/nav_passenger"
+        android:name="com.example.ppbus.ui.bus.PassengerInformationFragment"
+        android:label="乘客資訊"
+        tools:layout="@layout/fragment_passenger_information" />
+</navigation>

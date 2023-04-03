@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/logistic_nav_graph"
+    app:startDestination="@id/nav_packages">
+
+    <fragment
+        android:id="@+id/nav_packages"
+        android:name="com.example.ppbus.ui.logistic.PackagesFragment"
+        android:label="包裹追蹤"
+        tools:layout="@layout/fragment_packages" />
+    <fragment
+        android:id="@+id/nav_confirmed"
+        android:name="com.example.ppbus.ui.logistic.ConfirmedFragment"
+        android:label="待確認包裹"
+        tools:layout="@layout/fragment_confirmed" />
+</navigation>

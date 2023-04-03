@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#26294C"
+    android:orientation="vertical"
+    tools:context=".login_and_register.LoginAndRegisterActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="65dp"
+        android:text="客貨共載"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="38sp" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tl_login_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
+        android:background="#26294C"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="fixed"
+        app:tabGravity="center"
+        app:tabRippleColor="@null"
+        />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp2_login_signup"
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/viewpaper_background">
+
+    </androidx.viewpager2.widget.ViewPager2>
+
+</LinearLayout>

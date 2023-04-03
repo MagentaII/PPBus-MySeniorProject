@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "4429856530",
+    "project_id": "ppbus-581f6",
+    "storage_bucket": "ppbus-581f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4429856530:android:725fc837ff9e9ae854bdcb",
+        "android_client_info": {
+          "package_name": "com.example.ppbus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "4429856530-b79s07lhg3bjc8ca77sopikh56gl1932.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjVOfEFj7tk8HDQtqUnT794-h-pEp9p_M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "4429856530-b79s07lhg3bjc8ca77sopikh56gl1932.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

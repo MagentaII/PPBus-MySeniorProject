@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn = "navigation_view">
+
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:title=""/>
+
+        <item
+            android:id="@+id/nav_bus"
+            android:icon="@drawable/ic_directions_bus_48"
+            android:title="公車管理" />
+
+        <item
+            android:id="@+id/nav_passenger"
+            android:icon="@drawable/ic_baseline_person_24"
+            android:title="乘客資訊"/>
+        <item
+            android:title=""/>
+        <item
+            android:title=""/>
+        <item
+            android:title=""/>
+        <item
+            android:title=""/>
+        <item
+            android:title=""/>
+        <item
+            android:title=""/>
+
+    </group>
+
+    <item
+        android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_baseline_logout_24"
+                android:title="Logout"/>
+        </menu>
+    </item>
+</menu>
