@@ -1,6 +1,9 @@
 package com.example.ppbus.login_and_register;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -119,6 +122,10 @@ public class LoginFragment extends Fragment {
                                 startActivity(intent1);
                                 break;
                             case "2":
+                                SharedPreferences preferences = requireActivity().getSharedPreferences("myPrefs", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putString("username", userUsername);
+                                editor.apply();
                                 Intent intent2 = new Intent(getContext(), DriverActivity.class);
                                 startActivity(intent2);
                                 break;

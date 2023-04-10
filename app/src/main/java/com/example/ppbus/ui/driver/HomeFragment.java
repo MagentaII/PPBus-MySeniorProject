@@ -56,6 +56,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(Integer integer) {
                 tvPackageNum.setText(String.valueOf(integer) + "件");
+                viewModel.updateDriverPackageNum("701-FP", integer);
             }
         });
 

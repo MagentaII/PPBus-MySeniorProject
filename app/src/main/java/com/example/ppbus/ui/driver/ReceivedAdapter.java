@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ppbus.R;
@@ -23,9 +24,11 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
 
     private List<Packages2> packages2List = new ArrayList<>();
     private ViewModel viewModel;
+    private String username;
 
-    public ReceivedAdapter(ViewModel viewModel) {
+    public ReceivedAdapter(ViewModel viewModel, String username) {
         this.viewModel = viewModel;
+        this.username = username;
     }
 
     public void setPackages2List(List<Packages2> packages2List) {
@@ -63,6 +66,7 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
             public void onClick(View v) {
                 int id = packages2.getId();
                 viewModel.updateStatus(id, 2);
+                viewModel.addPlateNumb(id, username);
             }
         });
     }

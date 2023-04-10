@@ -14,7 +14,7 @@
         tools:targetApi="31">
         <activity
             android:name=".ui.user.AddActivity"
-            android:exported="false">
+            android:exported="true">
 
             <meta-data
                 android:name="android.app.lib_name"
@@ -22,12 +22,8 @@
         </activity>
         <activity
             android:name=".ui.driver.DriverActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="false">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -35,13 +31,14 @@
         <activity
             android:name=".ui.bus.BusActivity"
             android:exported="false">
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".ui.logistic.LogisticActivity"
-            android:exported="false">
+            android:exported="true">
 
             <meta-data
                 android:name="android.app.lib_name"
@@ -49,7 +46,12 @@
         </activity>
         <activity
             android:name=".login_and_register.LoginAndRegisterActivity"
-            android:exported="false">
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

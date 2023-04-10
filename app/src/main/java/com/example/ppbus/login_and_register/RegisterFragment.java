@@ -19,10 +19,13 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.ppbus.R;
+import com.example.ppbus.data.Driver;
 import com.example.ppbus.data.User;
 import com.example.ppbus.viewmodel.ViewModel;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Objects;
 
 public class RegisterFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
@@ -54,6 +57,10 @@ public class RegisterFragment extends Fragment implements AdapterView.OnItemSele
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
                 User user = new User(email, username, password, role);
+                if (Objects.equals(role, "2")){
+                    Driver driver = new Driver(username, "", 0);
+                    addDriver(driver, username);
+                }
                 doRegister(user, username);
             }
         });
@@ -76,6 +83,10 @@ public class RegisterFragment extends Fragment implements AdapterView.OnItemSele
     private void doRegister(User user, String username){
         viewModel.doRegister(user, username);
         Toast.makeText(getContext(), "You have signup successfully!!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void addDriver(Driver driver, String username){
+        viewModel.addDriver(driver, username);
     }
 
 

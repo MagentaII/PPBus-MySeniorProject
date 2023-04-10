@@ -73,10 +73,10 @@
                     app:layout_constraintGuide_percent="0.8" />
 
                 <TextView
-                    android:id="@+id/tv_driver"
+                    android:id="@+id/tv_plate_numb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="司機：XXX"
+                    android:text="車牌號碼"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -86,13 +86,13 @@
                     app:layout_constraintVertical_bias="0.3" />
 
                 <TextView
-                    android:id="@+id/tv_carid"
+                    android:id="@+id/tv_route_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="車牌號碼"
+                    android:text="路線名稱"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/tv_driver"
+                    app:layout_constraintStart_toStartOf="@+id/tv_plate_numb"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.73" />
 

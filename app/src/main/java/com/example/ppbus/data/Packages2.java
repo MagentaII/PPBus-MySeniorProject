@@ -2,16 +2,17 @@ package com.example.ppbus.data;
 
 public class Packages2 {
     int id, status;
-    String sender, recipient, address, date;
+    String sender, recipient, address, date, plateNumb;
     boolean visibility;
 
-    public Packages2(int id, String sender, String recipient, String address, int status, String date) {
+    public Packages2(int id, String sender, String recipient, String address, int status, String date, String plateNumb) {
         this.id = id;
         this.sender = sender;
         this.recipient = recipient;
         this.address = address;
         this.status = status;
         this.date = date;
+        this.plateNumb = plateNumb;
         this.visibility = false;
     }
 
@@ -69,5 +70,13 @@ public class Packages2 {
 
     public void setVisibility(boolean visibility) {
         this.visibility = visibility;
+    }
+
+    public String getPlateNumb() {
+        return plateNumb;
+    }
+
+    public void setPlateNumb(String plateNumb) {
+        this.plateNumb = plateNumb;
     }
 }

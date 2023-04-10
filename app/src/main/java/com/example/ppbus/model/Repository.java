@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.ppbus.data.Driver;
 import com.example.ppbus.data.Packages2;
 import com.example.ppbus.data.User;
 import com.example.ppbus.data.realTimeNearStop.RealTimeNearStop;
@@ -38,6 +39,7 @@ public class Repository {
     private List<Packages2> confirmedPackagesList = new ArrayList<>();
     private List<Packages2> receivedPackagesList = new ArrayList<>();
     private List<Packages2> transitPackagesList = new ArrayList<>();
+    private List<Driver> driverList = new ArrayList<>();
     private int currentId = 0;
 
 
@@ -52,6 +54,10 @@ public class Repository {
         reference.child(username).setValue(user);
     }
 
+    public void addDriver(Driver driver, String username) {
+        reference = FirebaseDatabase.getInstance().getReference("drivers");
+        reference.child(username).setValue(driver);
+    }
 
     public void addPackage(String consignor, String consignee, String address) {
         reference = FirebaseDatabase.getInstance().getReference("packages");
@@ -62,7 +68,7 @@ public class Repository {
                     currentId = Integer.parseInt(dataSnapshot.child("id").getValue().toString());
                     currentId++;
                     String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
-                    Packages2 packages2 = new Packages2(currentId, consignor, consignee, address, 0, date);
+                    Packages2 packages2 = new Packages2(currentId, consignor, consignee, address, 0, date, "");
                     reference.child(String.valueOf(currentId)).setValue(packages2);
                 }
             }
@@ -88,7 +94,7 @@ public class Repository {
                     String recipient = dataSnapshot.child("recipient").getValue(String.class);
                     String address = dataSnapshot.child("address").getValue(String.class);
                     int status = dataSnapshot.child("status").getValue(Integer.class);
-                    Packages2 packages2 = new Packages2(id, sender, recipient, address, status, date);
+                    Packages2 packages2 = new Packages2(id, sender, recipient, address, status, date, "");
                     packagesList.add(packages2);
                 }
                 callback.onGetPackage(packagesList);
@@ -109,6 +115,16 @@ public class Repository {
         reference.child(String.valueOf(id)).child("status").setValue(query);
     }
 
+    public void addPlateNumb(int id, String username){
+        reference = FirebaseDatabase.getInstance().getReference("packages");
+        reference.child(String.valueOf(id)).child("plateNumb").setValue(username);
+    }
+
+    public void updateDriverPackageNum(String plateNumb, int packageNum){
+        reference = FirebaseDatabase.getInstance().getReference("drivers");
+        reference.child(plateNumb).child("PackageNum").setValue(packageNum);
+    }
+
     public void getConfirmedPackages(final onGetConfirmedPackageCallback callback) {
         reference = FirebaseDatabase.getInstance().getReference("packages");
         Query confirmedPackagesQuery = reference.orderByChild("status").startAt(1);
@@ -123,7 +139,7 @@ public class Repository {
                     String recipient = dataSnapshot.child("recipient").getValue(String.class);
                     String address = dataSnapshot.child("address").getValue(String.class);
                     int status = dataSnapshot.child("status").getValue(Integer.class);
-                    Packages2 packages2 = new Packages2(id, sender, recipient, address, status, date);
+                    Packages2 packages2 = new Packages2(id, sender, recipient, address, status, date, "");
                     confirmedPackagesList.add(packages2);
                 }
                 callback.onGetConfirmedPackage(confirmedPackagesList);
@@ -153,7 +169,7 @@ public class Repository {
                     String recipient = dataSnapshot.child("recipient").getValue(String.class);
                     String address = dataSnapshot.child("address").getValue(String.class);
                     int status = dataSnapshot.child("status").getValue(Integer.class);
-                    Packages2 packages2 = new Packages2(id, sender, recipient, address, status, date);
+                    Packages2 packages2 = new Packages2(id, sender, recipient, address, status, date, "");
                     receivedPackagesList.add(packages2);
                 }
                 callback.onGetReceivedPackage(receivedPackagesList);
@@ -182,7 +198,7 @@ public class Repository {
                     String recipient = dataSnapshot.child("recipient").getValue(String.class);
                     String address = dataSnapshot.child("address").getValue(String.class);
                     int status = dataSnapshot.child("status").getValue(Integer.class);
-                    Packages2 packages2 = new Packages2(id, sender, recipient, address, status, date);
+                    Packages2 packages2 = new Packages2(id, sender, recipient, address, status, date, "");
                     transitPackagesList.add(packages2);
                 }
                 callback.onGetTransitPackage(transitPackagesList);
@@ -201,6 +217,32 @@ public class Repository {
         reference = FirebaseDatabase.getInstance().getReference("packages");
         Query transitPackagesNumQuery = reference.orderByChild("status").equalTo(2);
         return transitPackagesNumQuery;
+    }
+
+    public void getdrivers(final onGetDriversCallback callback) {
+        reference = FirebaseDatabase.getInstance().getReference("drivers");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                driverList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String plateNumb = dataSnapshot.child("PlateNumb").getValue(String.class);
+                    String routeName = dataSnapshot.child("RouteName").getValue(String.class);
+                    int packageNum = dataSnapshot.child("PackageNum").getValue(Integer.class);
+                    Driver driver = new Driver(plateNumb, routeName, packageNum);
+                    driverList.add(driver);
+                }
+                callback.onGetDriversPackage(driverList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    public interface onGetDriversCallback {
+        void onGetDriversPackage(List<Driver> driverList);
     }
 
 

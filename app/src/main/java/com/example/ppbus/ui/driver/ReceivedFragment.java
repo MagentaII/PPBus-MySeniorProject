@@ -1,5 +1,9 @@
 package com.example.ppbus.ui.driver;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.ppbus.R;
 import com.example.ppbus.data.Packages2;
@@ -55,8 +60,10 @@ public class ReceivedFragment extends Fragment {
     private void initializeVariables(View view) {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        SharedPreferences preferences = requireActivity().getSharedPreferences("myPrefs", MODE_PRIVATE);
+        String username = preferences.getString("username", "");
         viewModel = new ViewModelProvider(this).get(ViewModel.class);
-        receivedAdapter = new ReceivedAdapter(viewModel);
+        receivedAdapter = new ReceivedAdapter(viewModel, username);
         recyclerView.setAdapter(receivedAdapter);
     }
 }

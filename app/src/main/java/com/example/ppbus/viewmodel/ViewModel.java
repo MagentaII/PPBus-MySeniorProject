@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.ppbus.data.Driver;
 import com.example.ppbus.data.Packages2;
 import com.example.ppbus.data.User;
 import com.example.ppbus.data.realTimeNearStop.RealTimeNearStop;
@@ -27,6 +28,7 @@ public class ViewModel extends AndroidViewModel {
     private MutableLiveData<List<Packages2>> confirmedPackages2Live;
     private MutableLiveData<List<Packages2>> receivedPackages2Live;
     private MutableLiveData<List<Packages2>> transitPackages2Live;
+    private MutableLiveData<List<Driver>> driverLive;
     private final MutableLiveData<List<Stops>> stopsLive;
     private final MutableLiveData<List<RealTimeNearStop>> realTimeNearStopLive;
 
@@ -37,6 +39,7 @@ public class ViewModel extends AndroidViewModel {
         confirmedPackages2Live = new MutableLiveData<>();
         receivedPackages2Live = new MutableLiveData<>();
         transitPackages2Live = new MutableLiveData<>();
+        driverLive = new MutableLiveData<>();
         stopsLive = new MutableLiveData<>();
         realTimeNearStopLive = new MutableLiveData<>();
     }
@@ -57,8 +60,16 @@ public class ViewModel extends AndroidViewModel {
         return transitPackages2Live;
     }
 
+    public MutableLiveData<List<Driver>> getDriverLive() {
+        return driverLive;
+    }
+
     public void doRegister(User user, String username){
         repository.doRegister(user, username);
+    }
+
+    public void addDriver(Driver driver, String username){
+        repository.addDriver(driver, username);
     }
 
     public void addPackage(String consignor, String consignee, String address){
@@ -67,6 +78,14 @@ public class ViewModel extends AndroidViewModel {
 
     public void updateStatus(int id, int query){
         repository.updateStatus(id, query);
+    }
+
+    public void addPlateNumb(int id, String username){
+        repository.addPlateNumb(id, username);
+    }
+
+    public void updateDriverPackageNum(String plateNumb, int packageNum){
+        repository.updateDriverPackageNum(plateNumb, packageNum);
     }
 
     public void getPackage(){
@@ -119,6 +138,15 @@ public class ViewModel extends AndroidViewModel {
             }
         });
         return transitNum;
+    }
+
+    public void getdrivers(){
+        repository.getdrivers(new Repository.onGetDriversCallback() {
+            @Override
+            public void onGetDriversPackage(List<Driver> driverList) {
+                driverLive.setValue(driverList);
+            }
+        });
     }
 
 
