@@ -43,8 +43,7 @@ public class ConfirmedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initializeVariables(view);
-        viewModel.getPackage();
-        viewModel.getPackages2Live().observe(requireActivity(), new Observer<List<Packages2>>() {
+        viewModel.getPackage().observe(requireActivity(), new Observer<List<Packages2>>() {
             @Override
             public void onChanged(List<Packages2> packages2List) {
                 confirmedAdapter.setPackages2List(packages2List);

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/driver_nav_graph"
-    app:startDestination="@id/nav_home">
+    app:startDestination="@id/nav_route">
 
     <fragment
         android:id="@+id/nav_home"
@@ -24,4 +24,13 @@
         android:name="com.example.ppbus.ui.driver.TransitFragment"
         android:label="運送中包裹"
         tools:layout="@layout/fragment_transit" />
+    <fragment
+        android:id="@+id/nav_route"
+        android:name="com.example.ppbus.ui.driver.RouteFragment"
+        android:label="fragment_route"
+        tools:layout="@layout/fragment_route" >
+        <action
+            android:id="@+id/action_routeFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
 </navigation>

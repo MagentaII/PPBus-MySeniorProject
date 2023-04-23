@@ -10,29 +10,15 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.ppbus.data.Packages;
 import com.example.ppbus.R;
 import com.example.ppbus.data.Packages2;
-import com.example.ppbus.data.realTimeNearStop.RealTimeNearStop;
-import com.example.ppbus.data.realTimeNearStop.RealTimeStopName;
-import com.example.ppbus.data.stopOfRoute.Stops;
 import com.example.ppbus.viewmodel.ViewModel;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PackagesFragment extends Fragment {
     private RecyclerView recyclerView;
@@ -56,8 +42,7 @@ public class PackagesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initializeVariables(view);
-        viewModel.getConfirmedPackages();
-        viewModel.getConfirmedPackages2Live().observe(requireActivity(), new Observer<List<Packages2>>() {
+        viewModel.getConfirmedPackages().observe(requireActivity(), new Observer<List<Packages2>>() {
             @Override
             public void onChanged(List<Packages2> packages2List) {
                 packagesAdapter.setPackages2List(packages2List);

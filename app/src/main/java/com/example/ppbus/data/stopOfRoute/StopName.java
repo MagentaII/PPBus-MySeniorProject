@@ -3,15 +3,24 @@ package com.example.ppbus.data.stopOfRoute;
 import com.google.gson.annotations.SerializedName;
 
 public class StopName {
-
     @SerializedName("Zh_tw")
-    private String Zh_tw;
+    private String zhTw;
+    @SerializedName("En")
+    private String en;
 
-    public String getZh_tw() {
-        return Zh_tw;
+    public String getZhTw() {
+        return zhTw;
     }
 
-    public void setZh_tw(String zh_tw) {
-        Zh_tw = zh_tw;
+    public void setZhTw(String zhTw) {
+        this.zhTw = zhTw;
+    }
+
+    public String getEn() {
+        return en;
+    }
+
+    public void setEn(String en) {
+        this.en = en;
     }
 }

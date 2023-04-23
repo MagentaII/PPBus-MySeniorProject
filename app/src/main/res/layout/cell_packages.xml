@@ -125,7 +125,7 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <TextView
                     android:id="@+id/tv_station"
@@ -193,46 +193,99 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/imageView8"
+                    android:id="@+id/img_yes1_1"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView6"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView6"
-                    app:layout_constraintStart_toStartOf="@+id/imageView6"
-                    app:layout_constraintTop_toTopOf="@+id/imageView6"
+                    app:layout_constraintBottom_toBottomOf="@+id/img_no1"
+                    app:layout_constraintEnd_toEndOf="@+id/img_no1"
+                    app:layout_constraintStart_toStartOf="@+id/img_no1"
+                    app:layout_constraintTop_toTopOf="@+id/img_no1"
                     app:srcCompat="@drawable/ic_baseline_circle_24_2" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/img_yes3_1"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/img_no3"
+                    app:layout_constraintEnd_toEndOf="@+id/img_no3"
+                    app:layout_constraintStart_toStartOf="@+id/img_no3"
+                    app:layout_constraintTop_toTopOf="@+id/img_no3"
+                    app:srcCompat="@drawable/ic_baseline_circle_24_2" />
+
+                <ImageView
+                    android:id="@+id/img_yes2_1"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/img_no2"
+                    app:layout_constraintEnd_toEndOf="@+id/img_no2"
+                    app:layout_constraintStart_toStartOf="@+id/img_no2"
+                    app:layout_constraintTop_toTopOf="@+id/img_no2"
+                    app:srcCompat="@drawable/ic_baseline_circle_24_2" />
+
+                <ImageView
+                    android:id="@+id/img_no1"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    app:layout_constraintBottom_toTopOf="@+id/imageView6"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView6"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toTopOf="@+id/img_no2"
+                    app:layout_constraintEnd_toEndOf="@+id/img_no2"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@+id/imageView6"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/img_no2"
+                    app:layout_constraintTop_toTopOf="@+id/view2"
                     app:srcCompat="@drawable/ic_radio_button_unchecked_48" />
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/img_no2"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline6"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline8"
-                    app:layout_constraintHorizontal_bias="0.78"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView6"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toTopOf="@+id/img_no3"
+                    app:layout_constraintEnd_toEndOf="@+id/img_no3"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/img_no3"
+                    app:layout_constraintTop_toBottomOf="@+id/img_no1"
                     app:srcCompat="@drawable/ic_radio_button_unchecked_48" />
 
                 <ImageView
-                    android:id="@+id/imageView6"
+                    android:id="@+id/img_no3"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/view2"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline8"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_no2"
+                    app:srcCompat="@drawable/ic_radio_button_unchecked_48" />
+
+                <ImageView
+                    android:id="@+id/img_yes1_0"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    app:layout_constraintBottom_toTopOf="@+id/imageView2"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView2"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@+id/imageView2"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView"
+                    app:layout_constraintBottom_toBottomOf="@+id/img_yes1_1"
+                    app:layout_constraintEnd_toEndOf="@+id/img_yes1_1"
+                    app:layout_constraintStart_toStartOf="@+id/img_yes1_1"
+                    app:layout_constraintTop_toTopOf="@+id/img_yes1_1"
+                    app:srcCompat="@drawable/ic_radio_button_checked_48" />
+
+                <ImageView
+                    android:id="@+id/img_yes3_0"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/img_yes3_1"
+                    app:layout_constraintEnd_toEndOf="@+id/img_yes3_1"
+                    app:layout_constraintStart_toStartOf="@+id/img_yes3_1"
+                    app:layout_constraintTop_toTopOf="@+id/img_yes3_1"
+                    app:srcCompat="@drawable/ic_radio_button_checked_48" />
+
+                <ImageView
+                    android:id="@+id/img_yes2_0"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/img_yes2_1"
+                    app:layout_constraintEnd_toEndOf="@+id/img_yes2_1"
+                    app:layout_constraintStart_toStartOf="@+id/img_yes2_1"
+                    app:layout_constraintTop_toTopOf="@+id/img_yes2_1"
                     app:srcCompat="@drawable/ic_radio_button_checked_48" />
 
                 <TextView

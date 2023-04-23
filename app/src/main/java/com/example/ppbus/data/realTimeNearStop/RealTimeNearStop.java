@@ -1,6 +1,5 @@
 package com.example.ppbus.data.realTimeNearStop;
 
-import com.example.ppbus.data.stopOfRoute.StopName;
 import com.google.gson.annotations.SerializedName;
 
 public class RealTimeNearStop {

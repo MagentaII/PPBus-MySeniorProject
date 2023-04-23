@@ -1,19 +1,15 @@
 package com.example.ppbus.model;
 
 import android.content.Context;
-import android.media.MediaCodec;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.ppbus.data.Driver;
 import com.example.ppbus.data.Packages2;
 import com.example.ppbus.data.User;
-import com.example.ppbus.data.realTimeNearStop.RealTimeNearStop;
-import com.example.ppbus.data.stopOfRoute.StopOfRoute;
-import com.example.ppbus.data.stopOfRoute.Stops;
-import com.example.ppbus.retrofit.RetrofitManager;
-import com.example.ppbus.retrofit.TDXAPIService;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,13 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class Repository {
+public class FirebaseRepository {
 
     private final Context context;
     private DatabaseReference reference;
@@ -43,7 +34,7 @@ public class Repository {
     private int currentId = 0;
 
 
-    public Repository(Context context) {
+    public FirebaseRepository(Context context) {
         this.context = context;
     }
 
@@ -81,9 +72,11 @@ public class Repository {
 
     }
 
-    public void getPackage(final onGetPackageCallback callback) {
+    public LiveData<List<Packages2>> getPackage() {
+        MutableLiveData<List<Packages2>> packagesLive = new MutableLiveData<>();
         reference = FirebaseDatabase.getInstance().getReference("packages");
-        reference.addValueEventListener(new ValueEventListener() {
+        Query packagesQuery = reference.orderByChild("status").equalTo(0);
+        packagesQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 packagesList.clear();
@@ -97,7 +90,7 @@ public class Repository {
                     Packages2 packages2 = new Packages2(id, sender, recipient, address, status, date, "");
                     packagesList.add(packages2);
                 }
-                callback.onGetPackage(packagesList);
+                packagesLive.postValue(packagesList);
             }
 
             @Override
@@ -105,9 +98,7 @@ public class Repository {
 
             }
         });
-    }
-    public interface onGetPackageCallback {
-        void onGetPackage(List<Packages2> packages2List);
+        return packagesLive;
     }
 
     public void updateStatus(int id, int query){
@@ -120,12 +111,18 @@ public class Repository {
         reference.child(String.valueOf(id)).child("plateNumb").setValue(username);
     }
 
-    public void updateDriverPackageNum(String plateNumb, int packageNum){
+    public void updateDriverPackageNum(String username, int packageNum){
         reference = FirebaseDatabase.getInstance().getReference("drivers");
-        reference.child(plateNumb).child("PackageNum").setValue(packageNum);
+        reference.child(username).child("packageNum").setValue(packageNum);
     }
 
-    public void getConfirmedPackages(final onGetConfirmedPackageCallback callback) {
+    public void updateRouteName(String username, String routeName){
+        reference = FirebaseDatabase.getInstance().getReference("drivers");
+        reference.child(username).child("routeName").setValue(routeName);
+    }
+
+    public LiveData<List<Packages2>> getConfirmedPackages() {
+        MutableLiveData<List<Packages2>> confirmedPackagesLive = new MutableLiveData<>();
         reference = FirebaseDatabase.getInstance().getReference("packages");
         Query confirmedPackagesQuery = reference.orderByChild("status").startAt(1);
         confirmedPackagesQuery.addValueEventListener(new ValueEventListener() {
@@ -142,7 +139,7 @@ public class Repository {
                     Packages2 packages2 = new Packages2(id, sender, recipient, address, status, date, "");
                     confirmedPackagesList.add(packages2);
                 }
-                callback.onGetConfirmedPackage(confirmedPackagesList);
+                confirmedPackagesLive.postValue(confirmedPackagesList);
             }
 
             @Override
@@ -150,12 +147,11 @@ public class Repository {
 
             }
         });
-    }
-    public interface onGetConfirmedPackageCallback {
-        void onGetConfirmedPackage(List<Packages2> receivedPackagesList);
+        return confirmedPackagesLive;
     }
 
-    public void getReceivedPackages(final onGetReceivedPackageCallback callback) {
+    public LiveData<List<Packages2>> getReceivedPackages() {
+        MutableLiveData<List<Packages2>> receivedPackagesLive = new MutableLiveData<>();
         reference = FirebaseDatabase.getInstance().getReference("packages");
         Query receivedPackagesQuery = reference.orderByChild("status").equalTo(1);
         receivedPackagesQuery.addValueEventListener(new ValueEventListener() {
@@ -172,19 +168,18 @@ public class Repository {
                     Packages2 packages2 = new Packages2(id, sender, recipient, address, status, date, "");
                     receivedPackagesList.add(packages2);
                 }
-                callback.onGetReceivedPackage(receivedPackagesList);
+                receivedPackagesLive.postValue(receivedPackagesList);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-    }
-    public interface onGetReceivedPackageCallback {
-        void onGetReceivedPackage(List<Packages2> receivedPackagesList);
+        return receivedPackagesLive;
     }
 
-    public void getTransitPackages(final onGetTransitPackageCallback callback) {
+    public LiveData<List<Packages2>> getTransitPackages(String username) {
+        MutableLiveData<List<Packages2>> transitPackagesLive = new MutableLiveData<>();
         reference = FirebaseDatabase.getInstance().getReference("packages");
         Query transitPackagesQuery = reference.orderByChild("status").equalTo(2);
         transitPackagesQuery.addValueEventListener(new ValueEventListener() {
@@ -192,26 +187,31 @@ public class Repository {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 transitPackagesList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    int id = dataSnapshot.child("id").getValue(Integer.class);
-                    String date = dataSnapshot.child("date").getValue(String.class);
-                    String sender = dataSnapshot.child("sender").getValue(String.class);
-                    String recipient = dataSnapshot.child("recipient").getValue(String.class);
-                    String address = dataSnapshot.child("address").getValue(String.class);
-                    int status = dataSnapshot.child("status").getValue(Integer.class);
-                    Packages2 packages2 = new Packages2(id, sender, recipient, address, status, date, "");
-                    transitPackagesList.add(packages2);
+                    String dataPlateNumb = dataSnapshot.child("plateNumb").getValue(String.class);
+                    if (dataPlateNumb != null && !dataPlateNumb.isEmpty() && dataPlateNumb.equals(username)){
+                        int id = dataSnapshot.child("id").getValue(Integer.class);
+                        String date = dataSnapshot.child("date").getValue(String.class);
+                        String sender = dataSnapshot.child("sender").getValue(String.class);
+                        String recipient = dataSnapshot.child("recipient").getValue(String.class);
+                        String address = dataSnapshot.child("address").getValue(String.class);
+                        String plateNumb = dataSnapshot.child("plateNumb").getValue(String.class);
+                        int status = dataSnapshot.child("status").getValue(Integer.class);
+
+                        Packages2 packages2 = new Packages2(id, sender, recipient, address, status, date, plateNumb);
+                        transitPackagesList.add(packages2);
+                    }
+
                 }
-                callback.onGetTransitPackage(transitPackagesList);
+                transitPackagesLive.postValue(transitPackagesList);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(context, "something error", Toast.LENGTH_SHORT).show();
             }
         });
+        return transitPackagesLive;
     }
-    public interface onGetTransitPackageCallback {
-        void onGetTransitPackage(List<Packages2> transitPackagesList);
-    }
+
 
     public Query getTransitPackagesNum(){
         reference = FirebaseDatabase.getInstance().getReference("packages");
@@ -219,20 +219,27 @@ public class Repository {
         return transitPackagesNumQuery;
     }
 
-    public void getdrivers(final onGetDriversCallback callback) {
+    public Query getDriverRouteName(String username){
+        reference = FirebaseDatabase.getInstance().getReference("drivers");
+        Query driverRouteNameQuery = reference.child(username);
+        return driverRouteNameQuery;
+    }
+
+    public LiveData<List<Driver>> getDrivers() {
+        MutableLiveData<List<Driver>> driverLive = new MutableLiveData<>();
         reference = FirebaseDatabase.getInstance().getReference("drivers");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 driverList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    String plateNumb = dataSnapshot.child("PlateNumb").getValue(String.class);
-                    String routeName = dataSnapshot.child("RouteName").getValue(String.class);
-                    int packageNum = dataSnapshot.child("PackageNum").getValue(Integer.class);
+                    String plateNumb = dataSnapshot.child("plateNumb").getValue(String.class);
+                    String routeName = dataSnapshot.child("routeName").getValue(String.class);
+                    int packageNum = dataSnapshot.child("packageNum").getValue(Integer.class);
                     Driver driver = new Driver(plateNumb, routeName, packageNum);
                     driverList.add(driver);
                 }
-                callback.onGetDriversPackage(driverList);
+                driverLive.postValue(driverList);
             }
 
             @Override
@@ -240,64 +247,6 @@ public class Repository {
 
             }
         });
+        return driverLive;
     }
-    public interface onGetDriversCallback {
-        void onGetDriversPackage(List<Driver> driverList);
-    }
-
-
-
-
-
-
-
-
-    private final TDXAPIService tdxapiService = RetrofitManager.getInstance().getAPI();
-    public void getTDXStation(final onDataReadyCallback callback) {
-        Call<List<StopOfRoute>> call = tdxapiService.getStopOfRoute();
-        call.enqueue(new Callback<List<StopOfRoute>>() {
-            @Override
-            public void onResponse(Call<List<StopOfRoute>> call, Response<List<StopOfRoute>> response) {
-                List<StopOfRoute> stopOfRouteList = response.body();
-                for (StopOfRoute stopOfRoute : stopOfRouteList) {
-                    if (stopOfRoute.getDirection() == 0) {
-                        callback.onDataReady(stopOfRoute.getStops());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<StopOfRoute>> call, Throwable t) {
-
-            }
-        });
-    }
-    public interface onDataReadyCallback {
-        void onDataReady(List<Stops> stopsList);
-    }
-
-
-    public void getTDXRealTimeStation(final onRealTimeDataReadyCallback callback) {
-        Call<List<RealTimeNearStop>> call = tdxapiService.getRealTimeNearStop();
-        call.enqueue(new Callback<List<RealTimeNearStop>>() {
-            @Override
-            public void onResponse(Call<List<RealTimeNearStop>> call, Response<List<RealTimeNearStop>> response) {
-                callback.onRealTimeDataReady(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<List<RealTimeNearStop>> call, Throwable t) {
-
-            }
-        });
-    }
-    public interface onRealTimeDataReadyCallback {
-        void onRealTimeDataReady(List<RealTimeNearStop> realTimeNearStopList);
-    }
-
-    public void putStopsToFirebase(String routeName, int direction, Map<Integer, String> stopsMap) {
-        reference = FirebaseDatabase.getInstance().getReference("stops");
-        reference.child(routeName).child(String.valueOf(direction)).setValue(stopsMap);
-    }
-
 }

@@ -1,40 +1,57 @@
 package com.example.ppbus.data.stopOfRoute;
 
-import com.example.ppbus.data.stopOfRoute.StopName;
 import com.google.gson.annotations.SerializedName;
 
 public class Stops {
-
     @SerializedName("StopUID")
-    private String StopUID;
-
+    private String stopUID;
+    @SerializedName("StopID")
+    private String stopID;
     @SerializedName("StopName")
-    private StopName StopName;
-
+    private StopName stopName;
     @SerializedName("StopSequence")
-    private int StopSequence;
+    private int stopSequence;
+    @SerializedName("StopPosition")
+    private StopPosition stopPosition;
 
     public String getStopUID() {
-        return StopUID;
+        return stopUID;
     }
 
     public void setStopUID(String stopUID) {
-        StopUID = stopUID;
+        this.stopUID = stopUID;
     }
 
-    public com.example.ppbus.data.stopOfRoute.StopName getStopName() {
-        return StopName;
+    public String getStopID() {
+        return stopID;
     }
 
-    public void setStopName(com.example.ppbus.data.stopOfRoute.StopName stopName) {
-        StopName = stopName;
+    public void setStopID(String stopID) {
+        this.stopID = stopID;
+    }
+
+    public StopName getStopName() {
+        return stopName;
+    }
+
+    public void setStopName(StopName stopName) {
+        this.stopName = stopName;
     }
 
     public int getStopSequence() {
-        return StopSequence;
+        return stopSequence;
     }
 
     public void setStopSequence(int stopSequence) {
-        StopSequence = stopSequence;
+        this.stopSequence = stopSequence;
+    }
+
+    public StopPosition getStopPosition() {
+        return stopPosition;
+    }
+
+    public void setStopPosition(StopPosition stopPosition) {
+        this.stopPosition = stopPosition;
     }
 }
+

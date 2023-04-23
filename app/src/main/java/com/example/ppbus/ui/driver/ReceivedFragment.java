@@ -48,8 +48,7 @@ public class ReceivedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initializeVariables(view);
-        viewModel.getReceivedPackages();
-        viewModel.getReceivedPackages2Live().observe(requireActivity(), new Observer<List<Packages2>>() {
+        viewModel.getReceivedPackages().observe(requireActivity(), new Observer<List<Packages2>>() {
             @Override
             public void onChanged(List<Packages2> packages2List) {
                 receivedAdapter.setPackages2List(packages2List);

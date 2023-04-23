@@ -6,44 +6,24 @@ import java.util.List;
 
 public class StopOfRoute {
 
-    @SerializedName("RouteUID")
-    private String RouteUID;
-    @SerializedName("RouteID")
-    private String RouteID;
-    @SerializedName("Direction")
-    private int Direction;
     @SerializedName("Stops")
-    private List<Stops> Stops;
+    private List<Stops> stops;
+    @SerializedName("Direction")
+    private int direction;
 
-    public String getRouteUID() {
-        return RouteUID;
+    public List<Stops> getStops() {
+        return stops;
     }
 
-    public void setRouteUID(String routeUID) {
-        RouteUID = routeUID;
-    }
-
-    public String getRouteID() {
-        return RouteID;
-    }
-
-    public void setRouteID(String routeID) {
-        RouteID = routeID;
-    }
-
-    public List<com.example.ppbus.data.stopOfRoute.Stops> getStops() {
-        return Stops;
-    }
-
-    public void setStops(List<com.example.ppbus.data.stopOfRoute.Stops> stops) {
-        Stops = stops;
+    public void setStops(List<Stops> stops) {
+        this.stops = stops;
     }
 
     public int getDirection() {
-        return Direction;
+        return direction;
     }
 
     public void setDirection(int direction) {
-        Direction = direction;
+        this.direction = direction;
     }
 }

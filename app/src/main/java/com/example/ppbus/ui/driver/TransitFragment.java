@@ -1,5 +1,8 @@
 package com.example.ppbus.ui.driver;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,6 +28,7 @@ public class TransitFragment extends Fragment {
     private RecyclerView recyclerView;
     private ViewModel viewModel;
     private TransitAdapter transitAdapter;
+    private String username;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,9 +45,11 @@ public class TransitFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        SharedPreferences preferences = requireActivity().getSharedPreferences("myPrefs", MODE_PRIVATE);
+        username = preferences.getString("username", "");
+
         initializeVariables(view);
-        viewModel.getTransitPackages();
-        viewModel.getTransitPackages2Live().observe(requireActivity(), new Observer<List<Packages2>>() {
+        viewModel.getTransitPackages(username).observe(requireActivity(), new Observer<List<Packages2>>() {
             @Override
             public void onChanged(List<Packages2> packages2List) {
                 transitAdapter.setPackages2List(packages2List);

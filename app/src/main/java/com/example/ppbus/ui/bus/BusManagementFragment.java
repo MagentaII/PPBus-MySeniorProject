@@ -44,8 +44,7 @@ public class BusManagementFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initializeVariables(view);
-        viewModel.getdrivers();
-        viewModel.getDriverLive().observe(requireActivity(), new Observer<List<Driver>>() {
+        viewModel.getDrivers().observe(requireActivity(), new Observer<List<Driver>>() {
             @Override
             public void onChanged(List<Driver> drivers) {
                 busManagementAdapter.setDriverList(drivers);
@@ -57,7 +56,7 @@ public class BusManagementFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rv_bus_management);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
         viewModel = new ViewModelProvider(this).get(ViewModel.class);
-        busManagementAdapter = new BusManagementAdapter();
+        busManagementAdapter = new BusManagementAdapter(viewModel, getViewLifecycleOwner());
         recyclerView.setAdapter(busManagementAdapter);
     }
 }
