@@ -1,5 +1,6 @@
 package com.example.ppbus.data;
 
+// 這個用不到
 public class Packages {
     String id, date, name, pickup, destination, status;
     boolean visibility;
